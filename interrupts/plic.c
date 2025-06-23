@@ -28,8 +28,6 @@ uint64_t claim = PLIC_IOBASE + 0x200004; //0x200004 is the claim offset for ctx 
 // INTERNAL FUNCTION DECLARATIONS
 //
 
-// *** Note to student: the following MUST be declared extern. Do not change these
-// function delcarations!
 
 extern void plic_set_source_priority(uint32_t srcno, uint32_t level);
 extern int plic_source_pending(uint32_t srcno);
@@ -93,7 +91,7 @@ Result: Data in Memory-mapped addresses for priority is changed
 - Modifies the pointer to the priority level
 */
 void plic_set_source_priority(uint32_t srcno, uint32_t level) {
-    // FIXME your code goes here
+
     if(srcno > PLIC_SRCCNT || srcno == 0 || level < PLIC_PRIO_MIN){ // return if invalid inputs
         return;
     if(level > PLIC_PRIO_MAX) {level = PLIC_PRIO_MAX;}//deal with case where priority is too high
@@ -117,7 +115,7 @@ Result: All memory will be unchanged
 - Return 1 (true) if pending > 0, meaning our source is pending. Return 0 if not
 */
 int plic_source_pending(uint32_t srcno) {
-    // FIXME your code goes here
+
     if(srcno > PLIC_SRCCNT){return 0;} //return if invalid
     volatile uint32_t * pending_ptr = (volatile uint32_t*)(pending + sizeof(uint32_t)*(srcno/32)); //find pointer containing our pending bit
     //32 here represents 32 bits per 4-byte address pointed to by our enable_ptr
@@ -141,7 +139,7 @@ Result: Data in memory-mapped enable addresses is set to 1
 - Set the bit of our enable_ptr corresponding to srcno to 1
 */
 void plic_enable_source_for_context(uint32_t ctxno, uint32_t srcno) {
-    // FIXME your code goes here
+
     if(ctxno != 0 || srcno > PLIC_SRCCNT || srcno <= 0){ //return if invalid inputs
         return;
     }
@@ -164,7 +162,7 @@ Result: Bit in memory-mapped enable addresses is set to 0
 - Set the bit of our enable_ptr corresponding to srcno to 0 and don't touch the other bits
 */
 void plic_disable_source_for_context(uint32_t ctxno, uint32_t srcid) {
-    // FIXME your code goes here
+
     if(ctxno != 0 || srcid > PLIC_SRCCNT || srcid <= 0){ //return if invalid inputs
         return;
     }
@@ -187,7 +185,7 @@ Result: Data in memory-mapped threshold addresses is set to level
 - sets the value at this pointer to level
 */
 void plic_set_context_threshold(uint32_t ctxno, uint32_t level) {
-    // FIXME your code goes here
+
     if(ctxno != 0){ //exit if invalid context
         return;
     }
@@ -204,7 +202,7 @@ Result: Data is not altered
 - return de-referenced claim pointer
 */
 uint32_t plic_claim_context_interrupt(uint32_t ctxno) {
-    // FIXME your code goes here
+
     if(ctxno != 0){ //exit if invalid ctxno
         return 0;
     }
@@ -221,7 +219,7 @@ Result: Srcno is placed at the claim address to say that this source initiated t
 - Set value of ptr to srcno
 */
 void plic_complete_context_interrupt(uint32_t ctxno, uint32_t srcno) {
-    // FIXME your code goes here
+
     if(ctxno != 0 || srcno > PLIC_SRCCNT || srcno <= 0){ // exit if invalid ctxno or srcno
         return;
     }

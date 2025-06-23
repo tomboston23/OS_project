@@ -267,7 +267,7 @@ and let other things run before we know there is space in the txbuf.
 Then we enable THRE interrupts to show we are ready to transmit something.
 */
 void com_putc_async(struct uart * uart, char c) {
-    // FIXME your code goes here
+
     //trace("call putc async for char %d", c);
     uint64_t i = intr_disable();                //disable interrupts
     while (rbuf_full(&uart->txbuf)) {           // wait for txbuf to not be full
@@ -292,7 +292,7 @@ and let other things run before we know there is a character to be read in rxbuf
 Then we enable DR interrupts to show we read something.
 */
 char com_getc_async(struct uart * uart) {
-    // FIXME your code goes here
+
     uint64_t i = intr_disable();                //disable interrupts
     while (rbuf_empty(&uart->rxbuf)){           //wait for rxbuf to not be empty
         condition_wait(&uart->rxbuf_not_empty); //yield
@@ -327,7 +327,7 @@ static void uart_isr(int irqno, void * aux) {
     if (line_status & LSR_OE)
         panic("Receive buffer overrun");
     
-    // FIXME your code goes here
+
     if (line_status & LSR_DR) { //If there's data ready
         if (!rbuf_full(&uart->rxbuf)){
             char c = uart->regs->rbr; // receive

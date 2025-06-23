@@ -26,14 +26,12 @@ int elf_load(struct io_intf *io, void (**entryptr)(struct io_intf *io)) {
 //entryptr is the entry function that you need to start it (usually its some main function)
 
 
-    kprintf("WE AT ELF LOAD BUDDY\n");
     Elf64_Ehdr elfHead; //Read and verify the ELF header
     long headRead = ioread(io, &elfHead, sizeof(elfHead));
-    kprintf("HEAD SURVIDED\n");
     if(headRead < 0){
         return -EINVAL; //check if theres an error when reading the header
     }
-    kprintf("Youooo im in elfload!");
+
     if (elfHead.e_ident[0] != ELF0 || elfHead.e_ident[1] != ELF1 || 
         elfHead.e_ident[2] != ELF2 || elfHead.e_ident[3] != ELF3) {
         kprintf("\nNOT a ELF FILE");

@@ -173,8 +173,6 @@ _trap_entry_from_umode: #trap entry from U mode requires us to save tfr, switch 
         # stack pointer. We start by allocating a trap frame and saving t6
         # there, so we can use it as a temporary register.
 
-
-        # TODO: FIXME your code here
         csrrw   sp, sscratch, sp  # get kernel stack frame
 
         ld      tp, 0(sp)
@@ -190,8 +188,6 @@ _trap_entry_from_umode: #trap entry from U mode requires us to save tfr, switch 
 
         # We're now in S mode, so update our trap handler address to
         # _trap_entry_from_smode.
-
-        # TODO: FIXME your code here
         
         la t6, _trap_entry_from_smode  # get trap handler address for S mode
         csrw stvec, t6                 # set trap handler address into stvec
@@ -205,7 +201,6 @@ _trap_entry_from_umode: #trap entry from U mode requires us to save tfr, switch 
         # We're returning to U mode, so restore _trap_entry_from_umode as
         # trap handler.
 
-        # TODO: FIXME your code here
          # Set trap handler to user mode trap entry point
         la t6, _trap_entry_from_umode   #set trap handler address to umode
         csrw stvec, t6
@@ -224,8 +219,7 @@ _trap_entry_from_umode: #trap entry from U mode requires us to save tfr, switch 
 
 trap_umode_cont:  # trap_umode_cont is the part where it transfers control to exception or interrupt handlers
 # We did this because that is how they did it for the s mode trap entry
-        
-        # TODO: FIXME your code here
+
         csrr a0, scause # get cause of error, put in a0 to set as arg for excp or intr handler
         mv a1, sp       # set up tfr as argument for umode exception handler
         bgez a0, umode_excp_handler #go to u mode excp handler if cause is an exception

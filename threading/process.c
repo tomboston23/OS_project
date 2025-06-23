@@ -179,21 +179,3 @@ void process_exit(void){
     thread_exit();                  //piazza says to call this 
 
 }
-
-//these next 2 are so free don't worry about them
-//sike they did them in process.h
-
-/*
-Returns the process struct associated with the currently running thread.
-
-struct process *current_process(void){
-    return proctab[(current_pid())];
-}
-
-Returns the process ID of the process associated with the currently running thread.
-
-int current_pid(void){
-    return curprc;
-}
-
-*/

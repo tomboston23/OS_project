@@ -238,8 +238,7 @@ void memory_init(void) {
         free_list, RAM_END, page_cnt);
 
     // Put free pages on the free page list
-    // TODO: FIXME implement this (must work with your implementation of
-    // memory_alloc_page and memory_free_page).
+
     for(pp = free_list; pp < (void*)RAM_END; pp+=PAGE_SIZE){
         memory_free_page((void*)pp); //add all the available physical memory into free list
     }

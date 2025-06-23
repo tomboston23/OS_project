@@ -230,7 +230,6 @@ _thread_finish_jump: #thread_finish_jump completes the jump to U mode
         # a1 contains user stack pointer
         # a2 contains user pc
 
-        # TODO: FIXME your code here
         # read status and clear SIE (interrupt enable bit) (bit 1)
         csrrci a3, sstatus, 2 # b10
         andi a3, a3, 2            # read bit 1 

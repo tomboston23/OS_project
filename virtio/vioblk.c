@@ -61,9 +61,7 @@ struct vioblk_request_header {
 #define VIRTIO_BLK_S_UNSUPP     2
 
 //           Main device structure.
-//          
-//           FIXME You may modify this structure in any way you want. It is given as a
-//           hint to help you, but you may have your own (better!) way of doing things.
+
 
 // static struct lock vioblk_lock;
 
@@ -177,7 +175,7 @@ and device are registered.*/
 
 */
 void vioblk_attach(volatile struct virtio_mmio_regs * regs, int irqno) {
-    //           FIXME add additional declarations here if needed
+
     //initialize virtio_ops according to functions below
 
     static const struct io_ops virtio_ops = {
@@ -238,7 +236,7 @@ void vioblk_attach(volatile struct virtio_mmio_regs * regs, int irqno) {
 
     dev = kmalloc(sizeof(struct vioblk_device) + blksz);
     memset(dev, 0, sizeof(struct vioblk_device));
-    //           FIXME Finish initialization of vioblk device here
+
 
     lock_init(&dev->dev_lock, "vioblk_lock");
     dev->regs = regs;   //attach regs
@@ -313,7 +311,7 @@ vioblk open:
     return 0 to signify success - main will flag an error if we return anything else
 */
 int vioblk_open(struct io_intf ** ioptr, void * aux) {
-    //           FIXME your code here
+
     /*
     This is modeled very closely to uart open
     */
@@ -360,7 +358,6 @@ close vioblk by setting opened to 0
 */
 
 void vioblk_close(struct io_intf * io) {
-    //           FIXME your code here
 
     //get device from offset same way they did in ioctl
     struct vioblk_device * const dev = (void*)io - offsetof(struct vioblk_device, io_intf);
@@ -418,7 +415,6 @@ long vioblk_read (
     void * restrict buf,
     unsigned long bufsz)
 {
-    //           FIXME your code here
 
     struct vioblk_device *dev = (void*)io - offsetof(struct vioblk_device, io_intf); //get device - same way they did in ioctl
     if (dev->pos >= dev->size || bufsz == 0 || dev->opened == 0) return 0;           //check for obvious errors
@@ -494,7 +490,6 @@ long vioblk_write (
     const void * restrict buf,
     unsigned long n)
 {
-    //           FIXME your code here
 
     struct vioblk_device *dev = (void*)io - offsetof(struct vioblk_device, io_intf); //get device using offsetof
     if (dev->pos >= dev->size) return 0; //make sure pos isn't too big
@@ -594,7 +589,6 @@ Side effects : dev->regs->interrupt_ack changed - The overall effect is small, i
 that the interrupt has been taken care of
 */
 void vioblk_isr(int irqno, void * aux) {
-    //           FIXME your code here
 
     struct vioblk_device * dev = aux;//get device
     lock_acquire(&dev->dev_lock);
@@ -630,7 +624,7 @@ Should return invalid if either input variable is NULL
 */
 
 int vioblk_getlen(const struct vioblk_device * dev, uint64_t * lenptr) {
-    //           FIXME your code here
+
     if (lenptr == NULL || dev == NULL) return -EINVAL;
     *lenptr = dev->size; //get the size and put in lenptr
 
@@ -645,7 +639,7 @@ int vioblk_getlen(const struct vioblk_device * dev, uint64_t * lenptr) {
   Return invalid if either input ptr is NULL
 */
 int vioblk_getpos(const struct vioblk_device * dev, uint64_t * posptr) {
-    //           FIXME your code here
+
     if (posptr == NULL || dev == NULL) return -EINVAL;
     *posptr = dev->pos; // put pos in posptr
 
@@ -658,7 +652,7 @@ int vioblk_getpos(const struct vioblk_device * dev, uint64_t * posptr) {
     returns 0 if successful, returns invalid if the input size is too large or if inputs are null
 */
 int vioblk_setpos(struct vioblk_device * dev, const uint64_t * posptr) {
-    //           FIXME your code here
+
     if (posptr == NULL || dev == NULL) return -EINVAL;
     uint64_t pos = *posptr;
     if(pos > dev->size) return -EINVAL; //make sure pos is in the data - return invalid if it's too large
@@ -676,7 +670,7 @@ will return invalid if input ptrs are null
 int vioblk_getblksz (
     const struct vioblk_device * dev, uint32_t * blkszptr)
 {
-    //           FIXME your code here
+
     if (blkszptr == NULL || dev == NULL) return -EINVAL;
     *blkszptr = dev->blksz; //get blksz from the struct
 

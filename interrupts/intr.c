@@ -84,7 +84,7 @@ void intr_disable_irq(int irqno) {
 // INTERNAL FUNCTION DEFINITIONS
 //
 
-/*For our interrupt handler, we want to pass control over to the timer interrupt handler if that's the 
+/*For interrupt handler, we want to pass control over to the timer interrupt handler if that's the 
 interrupt that was signaled. Therefore we check mcause.MTI to see if a timer interrupt fired*/
 void intr_handler(int code) {
     switch (code) {
@@ -121,8 +121,7 @@ void extern_intr_handler(void) {
     
     if (isrtab[irqno].isr == NULL)
         panic("unhandled irq");
-    
-    // FIXME your code goes here
+  
     isrtab[irqno].isr(irqno, isrtab[irqno].isr_aux); //call the function for our irqno using struct variables
 
     plic_close_irq(irqno);
